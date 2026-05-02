@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartPrep AI: Intelligent Exam Preparation Platform</title>
+    <link rel="stylesheet" href="style.css?v=20260327-8" />
+  </head>
+  <body>
+    <!-- Animated Background Shapes -->
+    <div class="bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+      <div class="shape shape-6"></div>
+    </div>
+
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-brand">
+          <div class="brand-icon">🧠</div>
+          <div class="brand-info">
+            <h1 class="brand-title">SmartPrep AI</h1>
+            <p class="brand-subtitle">Intelligent Exam Preparation Platform</p>
+          </div>
+        </div>
+        <div class="header-controls">
+          <div class="status-card" id="statusIndicator">
+            <div class="status-icon">
+              <span class="status-pulse"></span>
+            </div>
+            <div class="status-info">
+              <span class="status-label">Server Status</span>
+              <span class="status-value">Initializing...</span>
+            </div>
+          </div>
+          <div class="mode-card" id="modeSwitcher" style="display: none">
+            <button
+              id="modeToggle"
+              class="mode-btn"
+              title="Switch between Online and Offline mode"
+              aria-label="Toggle online and offline mode"
+            >
+              <span class="mode-icon" id="modeIcon">🌐</span>
+              <span class="mode-label">
+                <span class="mode-type" id="modeText">ONLINE</span>
+                <span class="mode-desc">Mode</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+          <!-- Sidebar Header -->
+          <div class="sidebar-header">
+            <div class="sidebar-header-icon">🎯</div>
+            <h2>Navigation</h2>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="nav-section">
+            <div class="nav-section-label">
+              <span class="nav-label-icon">✨</span>
+              <span class="nav-label-text">Features</span>
+            </div>
+            <button
+              class="nav-button active"
+              data-tab="upload"
+              aria-label="Upload PDF documents"
+              role="tab"
+              aria-selected="true"
+            >
+              <span class="nav-btn-icon">📤</span>
+              <span class="nav-btn-text">Upload PDFs</span>
+            </button>
+            <button
+              class="nav-button"
+              data-tab="dashboard"
+              aria-label="View dashboard analytics"
+              role="tab"
+              aria-selected="false"
+            >
+              <span class="nav-btn-icon">📊</span>
+              <span class="nav-btn-text">Dashboard</span>
+            </button>
+            <button
+              class="nav-button"
+              data-tab="documents"
+              aria-label="Browse uploaded documents"
+              role="tab"
+              aria-selected="false"
+            >
+              <span class="nav-btn-icon">📚</span>
+              <span class="nav-btn-text">Documents</span>
+            </button>
+            <button
+              class="nav-button"
+              data-tab="mcq"
+              aria-label="Generate multiple choice questions"
+              role="tab"
+              aria-selected="false"
+            >
+              <span class="nav-btn-icon">❓</span>
+              <span class="nav-btn-text">Generate MCQs</span>
+            </button>
+            <button
+              class="nav-button"
+              data-tab="analytics"
+              aria-label="View performance analytics"
+              role="tab"
+              aria-selected="false"
+            >
+              <span class="nav-btn-icon">📈</span>
+              <span class="nav-btn-text">Analytics</span>
+            </button>
+            <button
+              class="nav-button"
+              data-tab="assessment"
+              aria-label="Take assessment test"
+              role="tab"
+              aria-selected="false"
+            >
+              <span class="nav-btn-icon">📝</span>
+              <span class="nav-btn-text">Assessment Test</span>
+            </button>
+          </div>
+
+          <!-- Quick Stats Section -->
+          <div class="nav-section">
+            <div class="nav-section-label">
+              <span class="nav-label-icon">📊</span>
+              <span class="nav-label-text">Quick Stats</span>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-card-icon">📂</div>
+                <div class="stat-card-content">
+                  <span class="stat-card-value" id="docCount">0</span>
+                  <span class="stat-card-label">Documents</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-card-icon">🧩</div>
+                <div class="stat-card-content">
+                  <span class="stat-card-value" id="chunkCount">0</span>
+                  <span class="stat-card-label">Chunks</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Clear Database Button -->
+          <div class="nav-section">
+            <button class="nav-button-danger" id="clearBtn">
+              <span class="nav-btn-icon">🗑️</span>
+              <span class="nav-btn-text">Clear Database</span>
+            </button>
+          </div>
+        </nav>
+
+        <!-- Tab Content -->
+        <section class="tab-content">
+          <!-- Upload PDFs Tab -->
+          <div class="tab active" id="uploadTab">
+            <!-- Upload Hero Section -->
+            <div class="upload-hero">
+              <div class="upload-hero-icon">📚</div>
+              <h2>Upload Exam Materials</h2>
+              <p>
+                Build your knowledge base with PDF files from different exam
+                categories
+              </p>
+            </div>
+
+            <!-- Upload Container -->
+            <div class="upload-container">
+              <!-- File Upload Card -->
+              <div class="upload-card">
+                <div class="upload-card-header">
+                  <span class="upload-card-icon">📄</span>
+                  <h3>Select PDF File</h3>
+                </div>
+                <div class="file-drop-zone" id="fileDropZone">
+                  <div class="file-drop-content">
+                    <div class="file-drop-icon">📤</div>
+                    <p class="file-drop-text">
+                      Drag & drop your PDF here or click to browse
+                    </p>
+                    <input
+                      type="file"
+                      id="pdfFile"
+                      accept=".pdf"
+                      class="file-input-hidden"
+                    />
+                    <button
+                      type="button"
+                      class="file-browse-btn"
+                      onclick="document.getElementById('pdfFile').click()"
+                    >
+                      Choose File
+                    </button>
+                  </div>
+                  <div
+                    class="file-selected"
+                    id="fileSelected"
+                    style="display: none"
+                  >
+                    <span class="file-selected-icon">✓</span>
+                    <span class="file-selected-name" id="fileName"></span>
+                  </div>
+                </div>
+                <p class="upload-card-help">Max size: 50 MB • Format: PDF</p>
+              </div>
+
+              <!-- Category Card -->
+              <div class="upload-card">
+                <div class="upload-card-header">
+                  <span class="upload-card-icon">🏷️</span>
+                  <h3>Select Category</h3>
+                </div>
+                <div class="category-selector">
+                  <select id="categorySelect" class="category-select">
+                    <option value="General">📚 General</option>
+                    <option value="Banking">🏦 Banking</option>
+                    <option value="Railways">🚂 Railways</option>
+                    <option value="History">📜 History</option>
+                    <option value="Geography">🌍 Geography</option>
+                    <option value="Laws">⚖️ Laws</option>
+                    <option value="Science">🔬 Science</option>
+                    <option value="Mathematics">🔢 Mathematics</option>
+                    <option value="English">📖 English</option>
+                    <option value="Current Affairs">📰 Current Affairs</option>
+                    <option value="Economics">💰 Economics</option>
+                    <option value="Politics">🏛️ Politics</option>
+                    <option value="Computer Science">
+                      💻 Computer Science
+                    </option>
+                    <option value="Literature">📚 Literature</option>
+                    <option value="Art & Culture">🎨 Art & Culture</option>
+                    <option value="Sports">⚽ Sports</option>
+                    <option value="Environment">🌱 Environment</option>
+                    <option value="Technology">⚙️ Technology</option>
+                    <option value="Others">📦 Others</option>
+                  </select>
+                </div>
+                <p class="upload-card-help">
+                  Choose the most relevant category for your material
+                </p>
+              </div>
+            </div>
+
+            <!-- Upload Button -->
+            <button id="uploadBtn" class="upload-ultimate-btn">
+              <span class="btn-icon">🚀</span>
+              <span class="btn-text">Upload to Knowledge Base</span>
+            </button>
+
+            <div class="upload-status" id="uploadStatus"></div>
+          </div>
+
+          <!-- Dashboard Tab -->
+          <div class="tab" id="dashboardTab">
+            <div class="dashboard-hero">
+              <div class="dashboard-hero-content">
+                <div class="hero-icon-wrapper">
+                  <div class="hero-icon">📊</div>
+                </div>
+                <div>
+                  <h2>Dashboard</h2>
+                  <p class="tab-description">
+                    Overview of your activity and performance.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="dashboard">
+              <div class="modern-dashboard-grid">
+                <div class="modern-dash-card card-documents">
+                  <div class="card-icon">📚</div>
+                  <div class="card-content">
+                    <div class="card-label">DOCUMENTS</div>
+                    <div class="card-value" id="dashDocCount">0</div>
+                    <div class="card-detail">
+                      Chunks: <span id="dashChunkCount">0</span>
+                    </div>
+                  </div>
+                  <div class="card-decoration"></div>
+                </div>
+
+                <div class="modern-dash-card card-mcqs">
+                  <div class="card-icon">❓</div>
+                  <div class="card-content">
+                    <div class="card-label">MCQS</div>
+                    <div class="card-value" id="dashMcqCount">0</div>
+                    <div class="card-detail">
+                      Last: <span id="dashMcqTopic">—</span>
+                    </div>
+                  </div>
+                  <div class="card-decoration"></div>
+                </div>
+
+                <div class="modern-dash-card card-assessment">
+                  <div class="card-icon">📝</div>
+                  <div class="card-content">
+                    <div class="card-label">ASSESSMENT</div>
+                    <div class="card-value" id="dashAssessAvg">—</div>
+                    <div class="card-detail">
+                      Attempts: <span id="dashAssessAttempts">0</span>
+                    </div>
+                  </div>
+                  <div class="card-decoration"></div>
+                </div>
+
+                <div class="modern-dash-card card-streak">
+                  <div class="card-icon">🔥</div>
+                  <div class="card-content">
+                    <div class="card-label">STREAK</div>
+                    <div class="card-value" id="dashStreakCurrent">0</div>
+                    <div class="card-detail">
+                      Best: <span id="dashStreakBest">0</span> days
+                    </div>
+                  </div>
+                  <div class="card-decoration"></div>
+                </div>
+
+                <div class="modern-dash-card card-server">
+                  <div class="card-icon">🔧</div>
+                  <div class="card-content">
+                    <div class="card-label">SERVER</div>
+                    <div class="server-status-badge" id="dashServerStatus">
+                      Checking...
+                    </div>
+                    <div class="card-detail" id="dashServerHint"></div>
+                  </div>
+                  <div class="card-decoration"></div>
+                </div>
+              </div>
+
+              <div class="modern-activity-section">
+                <div class="activity-header">
+                  <div class="activity-icon">📈</div>
+                  <h3>RECENT ACTIVITY</h3>
+                </div>
+                <div class="activity-container">
+                  <ul id="dashActivityList" class="modern-activity-list">
+                    <li class="activity-empty">No activity yet</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Documents Tab -->
+          <div class="tab" id="documentsTab">
+            <!-- Documents Hero Section -->
+            <div class="documents-hero">
+              <div class="documents-hero-icon">📚</div>
+              <h2>Uploaded Documents</h2>
+              <p>
+                Manage and view all your uploaded study materials in one place
+              </p>
+            </div>
+
+            <div id="documentsList" class="documents-list">
+              <p class="empty-state">
+                <span class="empty-icon">📂</span>
+                <span class="empty-text"
+                  >No documents uploaded yet. Start by uploading your first
+                  PDF!</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <!-- MCQ Generation Tab -->
+          <div class="tab" id="mcqTab">
+            <div class="mcq-hero-section">
+              <div class="mcq-hero-background">
+                <div class="hero-shape shape-1"></div>
+                <div class="hero-shape shape-2"></div>
+                <div class="hero-shape shape-3"></div>
+              </div>
+              <div class="mcq-hero-content">
+                <div class="hero-badge">🎯 NEW FEATURE</div>
+                <h2>Smart MCQ Generator</h2>
+                <p class="hero-subtitle">
+                  Transform your knowledge into practice tests! Generate
+                  intelligent multiple-choice questions from your documents or
+                  any topic.
+                </p>
+              </div>
+            </div>
+
+            <div class="mcq-creator-card">
+              <!-- Topic Selection -->
+              <div class="creator-section">
+                <div class="section-header">
+                  <span class="section-icon">🎨</span>
+                  <h3>PICK YOUR CHALLENGE</h3>
+                </div>
+
+                <div class="topic-selector-grid">
+                  <div class="topic-input-wrapper">
+                    <div class="input-label-modern">
+                      <span
+                        class="label-dot"
+                        style="background: #3b82f6"
+                      ></span>
+                      <span>📚 FROM DOCUMENTS</span>
+                    </div>
+                    <select id="mcqTopic" class="modern-select">
+                      <option value="">-- No documents uploaded --</option>
+                      <option value="Banking">Banking</option>
+                      <option value="Railways">Railways</option>
+                      <option value="General">General Knowledge</option>
+                      <option value="Laws">Laws & Constitution</option>
+                      <option value="History">History</option>
+                      <option value="Geography">Geography</option>
+                      <option value="Science">Science</option>
+                      <option value="Mathematics">Mathematics</option>
+                      <option value="English">English</option>
+                      <option value="Current Affairs">Current Affairs</option>
+                      <option value="Economics">Economics</option>
+                      <option value="Politics">Politics</option>
+                      <option value="Computer Science">Computer Science</option>
+                      <option value="Literature">Literature</option>
+                      <option value="Art & Culture">Art & Culture</option>
+                      <option value="Sports">Sports</option>
+                      <option value="Environment">Environment</option>
+                      <option value="Technology">Technology</option>
+                      <option value="Others">Others</option>
+                    </select>
+                  </div>
+
+                  <div class="or-divider">
+                    <span>OR</span>
+                  </div>
+
+                  <div class="topic-input-wrapper">
+                    <div class="input-label-modern">
+                      <span
+                        class="label-dot"
+                        style="background: #f59e0b"
+                      ></span>
+                      <span>✨ ENTER CUSTOM TOPIC</span>
+                    </div>
+                    <input
+                      type="text"
+                      id="customTopic"
+                      class="modern-input"
+                      placeholder="e.g., Photosynthesis, World War 2, Python Programming..."
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Configuration Section -->
+              <div class="creator-section">
+                <div class="section-header">
+                  <span class="section-icon">⚙️</span>
+                  <h3>CONFIGURE YOUR TEST</h3>
+                </div>
+
+                <div class="config-grid">
+                  <div class="config-card card-questions">
+                    <div class="config-icon">🔢</div>
+                    <div class="config-label">NUMBER OF QUESTIONS</div>
+                    <input
+                      type="number"
+                      id="numQuestions"
+                      class="config-input"
+                      min="1"
+                      max="25"
+                      value="5"
+                    />
+                    <div class="config-hint">Min: 1 | Max: 25</div>
+                  </div>
+
+                  <div class="config-card card-difficulty">
+                    <div class="config-icon">⚡</div>
+                    <div class="config-label">DIFFICULTY LEVEL</div>
+                    <select id="difficulty" class="config-select">
+                      <option value="easy">🟢 Easy - Beginner Friendly</option>
+                      <option value="medium" selected>
+                        🟡 Medium - Moderate Challenge
+                      </option>
+                      <option value="hard">🔴 Hard - Expert Level</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Exam Mode Toggle -->
+              <div class="exam-mode-wrapper">
+                <label class="exam-mode-toggle">
+                  <input
+                    type="checkbox"
+                    id="mcqExamMode"
+                    class="exam-checkbox"
+                  />
+                  <div class="exam-toggle-content">
+                    <div class="exam-icon">🎓</div>
+                    <div class="exam-text">
+                      <div class="exam-title">EXAM MODE</div>
+                      <div class="exam-subtitle">
+                        Realistic test conditions - no review, no going back
+                      </div>
+                    </div>
+                    <div class="exam-switch">
+                      <div class="exam-switch-slider"></div>
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Generate Button -->
+              <button
+                id="generateMcqBtn"
+                class="ultimate-generate-btn"
+                onclick="
+                  handleGenerateMCQ();
+                  return false;
+                "
+              >
+                <div class="btn-bg-animation"></div>
+                <span class="btn-icon-left">🚀</span>
+                <span class="btn-text">GENERATE MCQs</span>
+                <span class="btn-icon-right">→</span>
+              </button>
+            </div>
+
+            <div id="mcqResult" class="mcq-result"></div>
+          </div>
+
+          <!-- Analytics Tab -->
+          <div class="tab" id="analyticsTab">
+            <div class="analytics-hero">
+              <div class="analytics-hero-icon">📊</div>
+              <h2>Learning Analytics</h2>
+              <p class="tab-description">
+                Track your progress, performance patterns, and achievements
+                across all topics!
+              </p>
+            </div>
+
+            <div class="analytics-stats-grid">
+              <div class="analytics-stat-card card-mcqs">
+                <div class="stat-icon">❓</div>
+                <div class="stat-content">
+                  <div class="stat-label">MCQS GENERATED</div>
+                  <div class="stat-value" id="analyticsMcqTotal">0</div>
+                  <div class="stat-trend">Total questions created</div>
+                </div>
+              </div>
+              <div class="analytics-stat-card card-assessment">
+                <div class="stat-icon">📝</div>
+                <div class="stat-content">
+                  <div class="stat-label">ASSESSMENT AVG</div>
+                  <div class="stat-value" id="analyticsAssessAvg">—</div>
+                  <div class="stat-trend">Average test score</div>
+                </div>
+              </div>
+              <div class="analytics-stat-card card-streak">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-content">
+                  <div class="stat-label">STREAK</div>
+                  <div class="stat-value" id="analyticsStreak">0 days</div>
+                  <div class="stat-trend">Keep it going!</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="analytics-list" id="analyticsList"></div>
+
+            <div class="analytics-section">
+              <div class="section-header-analytics">
+                <span class="section-icon-analytics">🎯</span>
+                <h3>TOPIC HEATMAP</h3>
+              </div>
+              <div class="heatmap-container">
+                <div id="heatmapGrid" class="heatmap-grid"></div>
+              </div>
+            </div>
+
+            <div class="analytics-section">
+              <div class="section-header-analytics">
+                <span class="section-icon-analytics">🏆</span>
+                <h3>LEADERBOARD</h3>
+              </div>
+              <div class="leaderboard-container" id="leaderboard"></div>
+            </div>
+          </div>
+
+          <!-- Assessment Test Tab -->
+          <div class="tab" id="assessmentTab">
+            <div class="assessment-hero">
+              <div class="assessment-hero-icon">📝</div>
+              <h2>Full Assessment Test</h2>
+              <p class="tab-description">
+                Challenge yourself with a comprehensive exam to evaluate your
+                knowledge and track your progress!
+              </p>
+            </div>
+
+            <div id="assessmentSetup" class="assessment-setup-card">
+              <div class="setup-header">
+                <span class="setup-icon">📚</span>
+                <h3>CHOOSE TOPIC</h3>
+              </div>
+
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 12px;
+                  margin-bottom: 16px;
+                "
+              >
+                <div class="input-card">
+                  <label for="assessmentTopic" class="card-label">
+                    <span class="label-icon">📖</span>
+                    FROM DOCUMENTS
+                  </label>
+                  <select
+                    id="assessmentTopic"
+                    class="select-input enhanced-select"
+                  >
+                    <option value="">-- Select from documents --</option>
+                  </select>
+                </div>
+                <div class="input-card">
+                  <label for="customAssessmentTopic" class="card-label">
+                    <span class="label-icon">✨</span>
+                    OR CUSTOM TOPIC
+                  </label>
+                  <input
+                    type="text"
+                    id="customAssessmentTopic"
+                    class="text-input enhanced-input"
+                    placeholder="e.g., Indian Geography, World History..."
+                  />
+                </div>
+              </div>
+
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 12px;
+                  margin-bottom: 16px;
+                "
+              >
+                <div class="input-card">
+                  <label for="assessmentQuestions" class="card-label">
+                    <span class="label-icon">🔢</span>
+                    NUMBER OF QUESTIONS
+                  </label>
+                  <input
+                    type="number"
+                    id="assessmentQuestions"
+                    class="text-input enhanced-input"
+                    min="5"
+                    max="50"
+                    value="10"
+                    style="
+                      font-size: 16px;
+                      font-weight: 700;
+                      text-align: center;
+                    "
+                  />
+                  <div class="input-hint">Min: 5 | Max: 50</div>
+                </div>
+
+                <div class="input-card">
+                  <label for="assessmentDifficulty" class="card-label">
+                    <span class="label-icon">⚡</span>
+                    DIFFICULTY LEVEL
+                  </label>
+                  <select
+                    id="assessmentDifficulty"
+                    class="select-input enhanced-select"
+                    style="font-weight: 600"
+                  >
+                    <option value="easy">🟢 Easy - Warm Up</option>
+                    <option value="medium" selected>
+                      🟡 Medium - Standard
+                    </option>
+                    <option value="hard">🔴 Hard - Challenge</option>
+                  </select>
+                </div>
+              </div>
+
+              <button
+                id="startTestBtn"
+                class="btn btn-primary assessment-start-btn"
+              >
+                <span class="btn-icon">🚀</span>
+                <span>START ASSESSMENT</span>
+                <span class="btn-arrow">→</span>
+              </button>
+            </div>
+
+            <div id="assessmentContainer" style="display: none">
+              <!-- Test Header -->
+              <div class="assessment-header">
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="assessment-info">
+                  <span class="question-counter"
+                    >Question <span id="questionNumber">1</span> of
+                    <span id="totalQuestions">10</span></span
+                  >
+                  <span class="timer" id="timer">⏱️ Time: 0s</span>
+                  <span class="score-display"
+                    >Score: <span id="scoreDisplay">0</span></span
+                  >
+                </div>
+              </div>
+
+              <!-- Current Question -->
+              <div class="assessment-question" id="assessmentQuestion">
+                <!-- Question will be inserted here -->
+              </div>
+
+              <!-- Navigation Buttons -->
+              <div class="assessment-nav">
+                <button
+                  id="prevBtn"
+                  class="btn"
+                  style="background: #667eea; color: white"
+                >
+                  ⬅️ Previous
+                </button>
+                <button
+                  id="nextBtn"
+                  class="btn"
+                  style="background: #667eea; color: white"
+                >
+                  Next ➡️
+                </button>
+                <button id="submitTestBtn" class="btn btn-primary">
+                  ✅ Submit Test
+                </button>
+              </div>
+            </div>
+
+            <div id="assessmentResults" style="display: none">
+              <!-- Results will be displayed here -->
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="spinner" id="spinner"></div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js?v=20260327-8"></script>
+  </body>
+</html>
